@@ -138,7 +138,7 @@ resource "azurerm_virtual_machine_extension" "vm_extension" {
   type_handler_version = "2.0"
   settings = <<SETTINGS
   {
-    "fileUris": ["https://raw.githubusercontent.com/Jlucas-1/Projeto-mainsait/main/Projeto-mainsait/cloud-init.sh"],
+    "fileUris": ["https://github.com/Jlucas-1/projeto-final/blob/main/cloud-init.sh"],
     "commandToExecute": "bash cloud-init.sh"
   }
 SETTINGS
