@@ -40,7 +40,9 @@ services:
   wordpress:
     depends_on:
       - db
-    image: wordpress:latest
+    build:
+      context: /home/azureuser
+      dockerfile: Dockerfile
     volumes:
       - wordpress_data:/var/www/html
     ports:
@@ -59,3 +61,4 @@ EOT
 
 # Subir os containers com Docker Compose
 docker-compose -f /home/azureuser/docker-compose.yml up -d
+
