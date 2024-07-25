@@ -132,17 +132,24 @@ resource "azurerm_network_interface_security_group_association" "nsg_association
 # Extensão da máquina virtual para instalar Docker
 resource "azurerm_virtual_machine_extension" "vm_extension" {
   name                 = "install-docker"
-  virtual_machine_id   = azurerm_virtual_machine.virtual_machine.id
+  virtual_machine_id   = azurerm_virtual_machine.vm.id
   publisher            = "Microsoft.Azure.Extensions"
   type                 = "CustomScript"
   type_handler_version = "2.0"
+
   settings = <<SETTINGS
-  {
-    "fileUris": ["https://raw.githubusercontent.com/Jlucas-1/projeto-final/main/cloud-init.sh"],
-    "commandToExecute": "bash cloud-init.sh"
-  }
+    {
+        "commandToExecute": "bash /var/lib/waagent/custom-script/download/0/cloud-init.sh"
+    }
 SETTINGS
+
+  protected_settings = <<PROTECTED_SETTINGS
+    {
+        "fileUris": ["https://raw.githubusercontent.com/Jlucas-1/projeto-final/main/cloud-init.sh"]
+    }
+PROTECTED_SETTINGS
 }
+
 
 # Saída do endereço IP público da VM
 output "public_ip_address" {
