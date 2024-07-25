@@ -1,22 +1,22 @@
 #!/bin/bash
 
 # Atualizar a lista de pacotes e atualizar os pacotes instalados
-apt-get update
-apt-get upgrade -y
+sudo apt-get update
+sudo apt-get upgrade -y
 
 # Instalar Docker
-apt-get install -y docker.io
+sudo apt-get install -y docker.io
 
 # Iniciar e habilitar Docker no sistema
-systemctl start docker
-systemctl enable docker
+sudo systemctl start docker
+sudo systemctl enable docker
 
 # Adicionar o usuário 'azureuser' ao grupo 'docker'
-usermod -aG docker azureuser
+sudo usermod -aG docker azureuser
 
 # Instalar Docker Compose
-curl -L "https://github.com/docker/compose/releases/download/1.25.4/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-chmod +x /usr/local/bin/docker-compose
+sudo curl -L "https://github.com/docker/compose/releases/download/1.25.4/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+sudo chmod +x /usr/local/bin/docker-compose
 
 # Criar diretório para o arquivo docker-compose.yml
 mkdir -p /home/azureuser
@@ -41,7 +41,7 @@ services:
     depends_on:
       - db
     build:
-      context: /home/azureuser
+      context: .
       dockerfile: Dockerfile
     volumes:
       - wordpress_data:/var/www/html
@@ -60,5 +60,6 @@ volumes:
 EOT
 
 # Subir os containers com Docker Compose
-docker-compose -f /home/azureuser/docker-compose.yml up -d
+sudo docker-compose -f /home/azureuser/docker-compose.yml up -d
+
 
